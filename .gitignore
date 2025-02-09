@@ -4,3 +4,4 @@
 handle-language-update.sh
 /languages/*.pot
 /languages/pot-languages
+.DS_store

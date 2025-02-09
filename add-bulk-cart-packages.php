@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Add bulk cart packages
- * Description: Crea pacchetti di prodotti e genera URL per aggiungerli al carrello con quantità specifiche.
+ * Description: Create packages of products and generate URLs to add them to the shopping cart with specific quantities
  * Version: 1.0.0
  * Author: Tommaso Costantini
  * License: GPL-2.0+

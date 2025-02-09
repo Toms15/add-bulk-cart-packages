@@ -2,67 +2,67 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-08T16:50:54+00:00\n"
+"PO-Revision-Date: 2025-02-09 15:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-08T16:50:54+00:00\n"
-"PO-Revision-Date: 2025-02-08T16:50:54+00:00\n"
-"Language: \n"
+"X-Generator: Poedit 3.5\n"
 
 #. Plugin Name of the plugin
 #: add-bulk-cart-packages.php
 msgid "Add bulk cart packages"
-msgstr ""
-
-#. Description of the plugin
-#: add-bulk-cart-packages.php
-msgid "Crea pacchetti di prodotti e genera URL per aggiungerli al carrello con quantità specifiche."
-msgstr ""
+msgstr "Add bulk cart packages"
 
 #. Author of the plugin
 #: add-bulk-cart-packages.php
 msgid "Tommaso Costantini"
-msgstr ""
+msgstr "Tommaso Costantini"
 
 #: add-bulk-cart-packages.php:40
 msgid "WooCommerce must be active to use this plugin."
-msgstr ""
+msgstr "WooCommerce deve essere attivo per utilizzare questo plugin."
 
 #: add-bulk-cart-packages.php:48
 msgid "<strong>Warning:</strong> The \"Add Bulk Cart Packages\" plugin requires WooCommerce to function."
-msgstr ""
+msgstr "<strong>Attenzione:</strong> Il plugin “Add bulk cart packages” richiede WooCommerce per funzionare."
 
-#: includes/custom-post-type.php:46
-#: includes/metaboxes.php:132
+#: includes/custom-post-type.php:46 includes/metaboxes.php:132
 msgid "Package URL"
-msgstr ""
+msgstr "URL del pacchetto"
 
 #: includes/metaboxes.php:5
 msgid "Select one or more products"
-msgstr ""
+msgstr "Seleziona uno o più prodotti"
 
 #: includes/metaboxes.php:38
 msgid "Add new product"
-msgstr ""
+msgstr "Aggiungi nuovo prodotto"
 
 #: includes/metaboxes.php:65
 msgid "Select a product"
-msgstr ""
+msgstr "Seleziona un prodotto"
 
 #: includes/metaboxes.php:82
 msgid "Remove"
-msgstr ""
+msgstr "Rimuovi"
 
 #: includes/metaboxes.php:162
 msgid "Copy this URL and use it to add products to your cart."
-msgstr ""
+msgstr "Copia la URL e usala per aggiungere i prodotti direttamente nel tuo carrello."
 
 #: includes/metaboxes.php:164
 msgid "Select at least one product to generate the URL."
-msgstr ""
+msgstr "Seleziona almeno un prodotto per generare la URL."
 
 #: includes/process-cart.php:11
 msgid "Security check failed."
-msgstr ""
+msgstr "Controllo di sicurezza fallito."
+
+#. Description of the plugin
+#: add-bulk-cart-packages.php
+msgid "Create packages of products and generate URLs to add them to the shopping cart with specific quantities"
+msgstr "Crea pacchetti di prodotti e genera URL per aggiungerli al carrello con quantità specifiche"
