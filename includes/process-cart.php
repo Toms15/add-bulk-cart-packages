@@ -1,13 +1,8 @@
 <?php
-add_action('wp_loaded', 'process_bulk_add_to_cart', 20);
-
 function process_bulk_add_to_cart() {
-    if (isset($_GET['add_package'])) {
+    if (isset($_GET['add_package']) && isset($_GET['_wpnonce'])) {
         // Verifica il nonce
-        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce(
-            sanitize_text_field(wp_unslash($_GET['_wpnonce'])),
-            'add_package_to_cart'
-        )) {
+        if (!wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'add_package_to_cart')) {
             wc_add_notice(__('Security check failed.', 'add-bulk-cart-packages'), 'error');
             wp_safe_redirect(wc_get_cart_url());
             exit;
@@ -43,3 +38,4 @@ function process_bulk_add_to_cart() {
         exit;
     }
 }
+add_action('init', 'process_bulk_add_to_cart');

@@ -146,17 +146,11 @@ function add_bulk_cart_packages_render_url_metabox($post) {
         $product_ids = implode(',', $products);
         $quantities_str = isset($quantities) && is_array($quantities) ? implode(',', $quantities) : '';
 
-        // Genera l'URL con il nonce
-        $base_url = add_query_arg(
-            array(
-                'add_package' => $product_ids,
-                'quantities' => $quantities_str,
-            ),
-            home_url()
-        );
+        // Genera il nonce
+        $nonce = wp_create_nonce('add_package_to_cart');
 
-        // Aggiungi il nonce all'URL
-        $url = wp_nonce_url($base_url, 'add_package_to_cart');
+        // Costruisce manualmente la URL senza codifica dei caratteri
+        $url = home_url("/?add_package={$product_ids}&quantities={$quantities_str}&_wpnonce={$nonce}");
 
         echo '<input type="text" value="' . esc_url($url) . '" readonly style="width: 100%; font-size: 14px;">';
         echo '<p>' . esc_html__('Copy this URL and use it to add products to your cart.', 'add-bulk-cart-packages') . '</p>';
