@@ -5,8 +5,8 @@ function add_metabox() {
     add_meta_box(
         'package_metabox',
         __('Select one or more products', 'add-bulk-cart-packages'),
-        'add_bulk_cart_packages_render_metabox',
-        'package',
+        __NAMESPACE__ . '\\render_metabox',
+        'abcp_package',
         'normal',
         'default'
     );
@@ -30,33 +30,14 @@ function render_metabox($post) {
     if (!empty($selected_products) && is_array($selected_products)) {
         foreach ($selected_products as $product_id) {
             $quantity = isset($selected_quantities[$product_id]) ? intval($selected_quantities[$product_id]) : 1;
-            add_bulk_cart_packages_render_repeater_row($products, $product_id, $quantity);
+            call_user_func(__NAMESPACE__ . '\\render_repeater_row', $products, $product_id, $quantity);
         }
     } else {
-        add_bulk_cart_packages_render_repeater_row($products);
+        call_user_func(__NAMESPACE__ . '\\render_repeater_row', $products);
     }
 
     echo '</div>';
     echo '<button type="button" id="woo-bulk-add-row" class="button">' . esc_html__('Add new product', 'add-bulk-cart-packages') . '</button>';
-
-    ?>
-    <script>
-    jQuery(document).ready(function($) {
-        $('#woo-bulk-add-row').on('click', function() {
-            var newRow = $('#woo-bulk-repeater .woo-bulk-row:first').clone();
-            newRow.find('select').val('');
-            newRow.find('input').val(1);
-            $('#woo-bulk-repeater').append(newRow);
-        });
-
-        $(document).on('click', '.woo-bulk-remove-row', function() {
-            if ($('#woo-bulk-repeater .woo-bulk-row').length > 1) {
-                $(this).closest('.woo-bulk-row').remove();
-            }
-        });
-    });
-    </script>
-    <?php
 }
 
 // Funzione per generare una riga del repeater
@@ -132,8 +113,8 @@ function add_url_metabox() {
     add_meta_box(
         'package_url_metabox',
         __('Package URL', 'add-bulk-cart-packages'),
-        'add_bulk_cart_packages_render_url_metabox',
-        'package',
+        __NAMESPACE__ . '\\render_url_metabox',
+        'abcp_package',
         'normal',
         'high'
     );
