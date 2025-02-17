@@ -1,5 +1,7 @@
 <?php
-function add_bulk_cart_packages_add_metabox() {
+namespace Toms15\ABCP;
+
+function add_metabox() {
     add_meta_box(
         'package_metabox',
         __('Select one or more products', 'add-bulk-cart-packages'),
@@ -9,9 +11,9 @@ function add_bulk_cart_packages_add_metabox() {
         'default'
     );
 }
-add_action('add_meta_boxes', 'add_bulk_cart_packages_add_metabox');
+add_action('add_meta_boxes', __NAMESPACE__ . '\\add_metabox');
 
-function add_bulk_cart_packages_render_metabox($post) {
+function render_metabox($post) {
      wp_nonce_field('add_bulk_cart_packages_nonce_action', 'add_bulk_cart_packages_nonce');
 
     $selected_products = get_post_meta($post->ID, '_add_bulk_cart_packages_products', true);
@@ -58,7 +60,7 @@ function add_bulk_cart_packages_render_metabox($post) {
 }
 
 // Funzione per generare una riga del repeater
-function add_bulk_cart_packages_render_repeater_row($products, $selected_product = '', $quantity = 1) {
+function render_repeater_row($products, $selected_product = '', $quantity = 1) {
     echo '<div class="woo-bulk-row" style="margin-bottom: 10px; display: flex; align-items: center;">';
 
     echo '<select name="add_bulk_cart_packages_products[]" style="margin-right: 10px;">';
@@ -83,7 +85,7 @@ function add_bulk_cart_packages_render_repeater_row($products, $selected_product
     echo '</div>';
 }
 
-function add_bulk_cart_packages_save_metabox($post_id) {
+function save_metabox($post_id) {
     // Verifica il nonce con sanitizzazione
     if (!isset($_POST['add_bulk_cart_packages_nonce']) ||
         !wp_verify_nonce(
@@ -124,9 +126,9 @@ function add_bulk_cart_packages_save_metabox($post_id) {
         delete_post_meta($post_id, '_add_bulk_cart_packages_quantities');
     }
 }
-add_action('save_post', 'add_bulk_cart_packages_save_metabox');
+add_action('save_post', __NAMESPACE__ . '\\save_metabox');
 
-function add_bulk_cart_packages_add_url_metabox() {
+function add_url_metabox() {
     add_meta_box(
         'package_url_metabox',
         __('Package URL', 'add-bulk-cart-packages'),
@@ -136,9 +138,9 @@ function add_bulk_cart_packages_add_url_metabox() {
         'high'
     );
 }
-add_action('add_meta_boxes', 'add_bulk_cart_packages_add_url_metabox');
+add_action('add_meta_boxes', __NAMESPACE__ . '\\add_url_metabox');
 
-function add_bulk_cart_packages_render_url_metabox($post) {
+function render_url_metabox($post) {
     $products = get_post_meta($post->ID, '_add_bulk_cart_packages_products', true);
     $quantities = get_post_meta($post->ID, '_add_bulk_cart_packages_quantities', true);
 

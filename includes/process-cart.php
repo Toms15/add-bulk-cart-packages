@@ -1,4 +1,6 @@
 <?php
+namespace Toms15\ABCP;
+
 function process_bulk_add_to_cart() {
     if (isset($_GET['add_package']) && isset($_GET['_wpnonce'])) {
         // Verifica il nonce
@@ -38,4 +40,4 @@ function process_bulk_add_to_cart() {
         exit;
     }
 }
-add_action('init', 'process_bulk_add_to_cart');
+add_action('init', __NAMESPACE__ . '\\process_bulk_add_to_cart');
