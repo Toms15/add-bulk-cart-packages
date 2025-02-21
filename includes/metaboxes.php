@@ -4,7 +4,7 @@ namespace Toms15\ABCP;
 function add_metabox() {
     add_meta_box(
         'package_metabox',
-        __('Select one or more products', 'add-bulk-cart-packages'),
+        __('Select products and coupon', 'add-bulk-cart-packages'),
         __NAMESPACE__ . '\\render_metabox',
         'abcp_package',
         'normal',
@@ -13,11 +13,42 @@ function add_metabox() {
 }
 add_action('add_meta_boxes', __NAMESPACE__ . '\\add_metabox');
 
+function get_available_coupons() {
+    $args = array(
+        'posts_per_page'   => -1,
+        'orderby'          => 'title',
+        'order'            => 'asc',
+        'post_type'        => 'shop_coupon',
+        'post_status'      => 'publish',
+    );
+
+    return get_posts($args);
+}
+
 function render_metabox($post) {
-     wp_nonce_field('add_bulk_cart_packages_nonce_action', 'add_bulk_cart_packages_nonce');
+    wp_nonce_field('add_bulk_cart_packages_nonce_action', 'add_bulk_cart_packages_nonce');
 
     $selected_products = get_post_meta($post->ID, '_add_bulk_cart_packages_products', true);
     $selected_quantities = get_post_meta($post->ID, '_add_bulk_cart_packages_quantities', true);
+    $selected_coupon = get_post_meta($post->ID, '_add_bulk_cart_packages_coupon', true);
+
+    // Aggiungi il campo select per i coupon
+    $coupons = get_available_coupons();
+    echo '<div style="margin-bottom: 20px;">';
+    echo '<label for="add_bulk_cart_packages_coupon" style="display: block; margin-bottom: 5px;">' . esc_html__('Select Coupon:', 'add-bulk-cart-packages') . '</label>';
+    echo '<select id="add_bulk_cart_packages_coupon" name="add_bulk_cart_packages_coupon" style="width: 300px;">';
+    echo '<option value="">' . esc_html__('No coupon', 'add-bulk-cart-packages') . '</option>';
+
+    foreach ($coupons as $coupon) {
+        printf(
+            '<option value="%s" %s>%s</option>',
+            esc_attr($coupon->post_title),
+            selected($coupon->post_title, $selected_coupon, false),
+            esc_html($coupon->post_title)
+        );
+    }
+    echo '</select>';
+    echo '</div>';
 
     $args = array(
         'post_type'      => 'product',
@@ -40,7 +71,6 @@ function render_metabox($post) {
     echo '<button type="button" id="woo-bulk-add-row" class="button">' . esc_html__('Add new product', 'add-bulk-cart-packages') . '</button>';
 }
 
-// Funzione per generare una riga del repeater
 function render_repeater_row($products, $selected_product = '', $quantity = 1) {
     echo '<div class="woo-bulk-row" style="margin-bottom: 10px; display: flex; align-items: center;">';
 
@@ -67,7 +97,6 @@ function render_repeater_row($products, $selected_product = '', $quantity = 1) {
 }
 
 function save_metabox($post_id) {
-    // Verifica il nonce con sanitizzazione
     if (!isset($_POST['add_bulk_cart_packages_nonce']) ||
         !wp_verify_nonce(
             sanitize_text_field(wp_unslash($_POST['add_bulk_cart_packages_nonce'])),
@@ -76,25 +105,20 @@ function save_metabox($post_id) {
         return;
     }
 
-    // Verifica l'autosave
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
 
-    // Verifica i permessi
     if (!current_user_can('edit_post', $post_id)) {
         return;
     }
 
-    // Salva i dati
     if (isset($_POST['add_bulk_cart_packages_products']) && is_array($_POST['add_bulk_cart_packages_products'])) {
-        // Applica wp_unslash() prima di sanitizzare
         $products = array_map('absint', wp_unslash($_POST['add_bulk_cart_packages_products']));
         $quantities = isset($_POST['add_bulk_cart_packages_quantities'])
             ? array_map('absint', wp_unslash($_POST['add_bulk_cart_packages_quantities']))
             : [];
 
-        // Assicuriamoci che la quantità sia associata correttamente ai prodotti
         $quantities_assoc = [];
         foreach ($products as $index => $product_id) {
             $quantities_assoc[$product_id] = isset($quantities[$index]) ? $quantities[$index] : 1;
@@ -102,9 +126,17 @@ function save_metabox($post_id) {
 
         update_post_meta($post_id, '_add_bulk_cart_packages_products', $products);
         update_post_meta($post_id, '_add_bulk_cart_packages_quantities', $quantities_assoc);
+
+        if (isset($_POST['add_bulk_cart_packages_coupon'])) {
+            $coupon = sanitize_text_field(wp_unslash($_POST['add_bulk_cart_packages_coupon']));
+            update_post_meta($post_id, '_add_bulk_cart_packages_coupon', $coupon);
+        } else {
+            delete_post_meta($post_id, '_add_bulk_cart_packages_coupon');
+        }
     } else {
         delete_post_meta($post_id, '_add_bulk_cart_packages_products');
         delete_post_meta($post_id, '_add_bulk_cart_packages_quantities');
+        delete_post_meta($post_id, '_add_bulk_cart_packages_coupon');
     }
 }
 add_action('save_post', __NAMESPACE__ . '\\save_metabox');
@@ -124,6 +156,7 @@ add_action('add_meta_boxes', __NAMESPACE__ . '\\add_url_metabox');
 function render_url_metabox($post) {
     $products = get_post_meta($post->ID, '_add_bulk_cart_packages_products', true);
     $quantities = get_post_meta($post->ID, '_add_bulk_cart_packages_quantities', true);
+    $selected_coupon = get_post_meta($post->ID, '_add_bulk_cart_packages_coupon', true);
 
     if (!empty($products) && is_array($products)) {
         $product_ids = implode(',', $products);
@@ -132,8 +165,12 @@ function render_url_metabox($post) {
         // Genera il nonce
         $nonce = wp_create_nonce('add_package_to_cart');
 
-        // Costruisce manualmente la URL senza codifica dei caratteri
-        $url = home_url("/?add_package={$product_ids}&quantities={$quantities_str}&_wpnonce={$nonce}");
+        // Costruisce la URL con il coupon prima del nonce
+        $url = home_url("/?add_package={$product_ids}&quantities={$quantities_str}");
+        if (!empty($selected_coupon)) {
+            $url .= "&coupon=" . urlencode($selected_coupon);
+        }
+        $url .= "&_wpnonce={$nonce}";
 
         echo '<input type="text" value="' . esc_url($url) . '" readonly style="width: 100%; font-size: 14px;">';
         echo '<p>' . esc_html__('Copy this URL and use it to add products to your cart.', 'add-bulk-cart-packages') . '</p>';
