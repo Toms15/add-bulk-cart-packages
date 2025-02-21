@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-08T16:50:54+00:00\n"
-"PO-Revision-Date: 2025-02-09 15:50+0100\n"
+"PO-Revision-Date: 2025-02-17 19:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -22,43 +22,43 @@ msgstr "Add bulk cart packages"
 msgid "Tommaso Costantini"
 msgstr "Tommaso Costantini"
 
-#: add-bulk-cart-packages.php:40
+#: add-bulk-cart-packages.php:39
 msgid "WooCommerce must be active to use this plugin."
 msgstr "WooCommerce deve essere attivo per utilizzare questo plugin."
 
-#: add-bulk-cart-packages.php:48
+#: add-bulk-cart-packages.php:47
 msgid "<strong>Warning:</strong> The \"Add Bulk Cart Packages\" plugin requires WooCommerce to function."
 msgstr "<strong>Attenzione:</strong> Il plugin “Add bulk cart packages” richiede WooCommerce per funzionare."
 
-#: includes/custom-post-type.php:46 includes/metaboxes.php:132
+#: includes/custom-post-type.php:69 includes/metaboxes.php:115
 msgid "Package URL"
 msgstr "URL del pacchetto"
 
-#: includes/metaboxes.php:5
+#: includes/metaboxes.php:7
 msgid "Select one or more products"
 msgstr "Seleziona uno o più prodotti"
 
-#: includes/metaboxes.php:38
+#: includes/metaboxes.php:40
 msgid "Add new product"
 msgstr "Aggiungi nuovo prodotto"
 
-#: includes/metaboxes.php:65
+#: includes/metaboxes.php:48
 msgid "Select a product"
 msgstr "Seleziona un prodotto"
 
-#: includes/metaboxes.php:82
+#: includes/metaboxes.php:65
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: includes/metaboxes.php:162
+#: includes/metaboxes.php:139
 msgid "Copy this URL and use it to add products to your cart."
 msgstr "Copia la URL e usala per aggiungere i prodotti direttamente nel tuo carrello."
 
-#: includes/metaboxes.php:164
+#: includes/metaboxes.php:141
 msgid "Select at least one product to generate the URL."
 msgstr "Seleziona almeno un prodotto per generare la URL."
 
-#: includes/process-cart.php:11
+#: includes/process-cart.php:8
 msgid "Security check failed."
 msgstr "Controllo di sicurezza fallito."
 
@@ -66,3 +66,51 @@ msgstr "Controllo di sicurezza fallito."
 #: add-bulk-cart-packages.php
 msgid "Create packages of products and generate URLs to add them to the shopping cart with specific quantities"
 msgstr "Crea pacchetti di prodotti e genera URL per aggiungerli al carrello con quantità specifiche"
+
+#: includes/custom-post-type.php:7 includes/custom-post-type.php:9
+msgid "Bulk Packages"
+msgstr "Pacchetti"
+
+#: includes/custom-post-type.php:8 includes/custom-post-type.php:10
+msgid "Bulk Package"
+msgstr "Pacchetto"
+
+#: includes/custom-post-type.php:11
+msgid "Add New"
+msgstr "Aggiungi nuovo"
+
+#: includes/custom-post-type.php:12
+msgid "Add New Package"
+msgstr "Aggiungi nuovo pacchetto"
+
+#: includes/custom-post-type.php:13
+msgid "New Package"
+msgstr "Nuovo pacchetto"
+
+#: includes/custom-post-type.php:14
+msgid "Edit Package"
+msgstr "Modifica pacchetto"
+
+#: includes/custom-post-type.php:15
+msgid "View Package"
+msgstr "Visualizza pacchetto"
+
+#: includes/custom-post-type.php:16
+msgid "All Packages"
+msgstr "Tutti i pacchetti"
+
+#: includes/custom-post-type.php:17
+msgid "Search Packages"
+msgstr "Cerca pacchetto"
+
+#: includes/custom-post-type.php:18
+msgid "No packages found"
+msgstr "Nessun pacchetto trovato"
+
+#: includes/custom-post-type.php:19
+msgid "No packages found in Trash"
+msgstr "Nessun pacchetto trovato nel Cestino"
+
+#: includes/custom-post-type.php:93
+msgid "No products selected"
+msgstr "Nessun prodotto selezionato"

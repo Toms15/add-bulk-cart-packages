@@ -1,5 +1,6 @@
 === Add bulk cart packages ===
-Contributors: toms15, Tommaso Costantini
+Contributors: toms15
+Author: Tommaso Costantini
 Tags: woocommerce, bulk add to cart, custom packages, multiple products, share cart URL
 Requires at least: 5.8
 Tested up to: 6.7
