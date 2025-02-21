@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Add bulk cart packages
  * Description: Create packages of products and generate URLs to add them to the shopping cart with specific quantities
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Tommaso Costantini
  * License: GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
